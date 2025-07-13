@@ -183,8 +183,7 @@ function App() {
           {alertVisible && (
             <Alert onAlertClick = { () => setAlertVisibility(false)}>
               <p>
-                The 
-                <a className = "link-danger" href="https://adp.moe/">
+                The <a className = "link-danger" href="https://adp.moe/">
                   <strong>Anime Discovery Project</strong>
                 </a> (ADP) at the University of Washington in Seattle is a club that welcomes all anime lovers for more than 30 years. In our time as 
                 an organization, we've acquired a substantial collection manga that we're excited to make <strong>free </strong> and publicly 
