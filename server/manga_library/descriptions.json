@@ -1,0 +1,68 @@
+{
+    ".hack//Legend of The Twilight": {
+        "description": "In a fictional MMORPG world, twins Rena and Shugo gain chibi avatars in the design of legendary .hackers. Given the Twilight Bracelet by a mysterious girl, the two embark on quest to find an AI named Aura and the solve the mystery of the Twilight Bracelet",
+        "genres": ["adventure", "comedy", "fantasy", "sci-fi", "video game", "shounen"]
+    },
+    "07-GHOST": {
+        "description": "After uncovering a dark secret related to his past, an amnesiac student of the Barsburg Empire Military Academy is imprisoned for attempting to assasinate a high-ranking official. After escaping with the help of a friend, our protagonist attempts to rediscover his memories and true destiny while evading capture from the Military ",
+        "genres": ["action", "fantasy", "military", "mythology", "josei"]
+    },
+    "A.I. Love You": {
+        "description": "A high school student creates an artificial intelligience that simulates talking to an actual girl. After a freak storm causes this program to emerge from his computer as a real girl, hijinks ensue.",
+        "genres": ["comedy", "romance", "sci-fi", "ecchi", "harem", "school", "shounen"]
+    },
+    "Abenobashi Magical Shopping Arcade": {
+        "description": "Two friends discover a portal to parallel universes that spoof popular media exists under the pavement when their Osakan neighborhood is levelled.",
+        "genres": ["adventure", "comedy", "fantasy", "ecchi", "isekai", "seinen"]
+    },
+    "Ace Attorney Official Casebook": {
+        "description": "A collection of doujinishi manga written by various manga writers/artists consisting of various short stories about Phoenix Wright & Miles Edgeworth, split into two volumes: \"Vol. 1 - The Phoneix Wright Files\" and \"Vol. 2 - The Miles Edgeworth Files\"",
+        "genres": ["comedy", "drama", "mystery", "detective", "workplace", "shounen"]
+    },
+    "Alice 19th": {
+        "description": "A shy, meek girl, always overshadowed by her older sister, becomes the master of a set of powerful words called the Lotis Words after rescuing a white rabbit, turning her life upside down",
+        "genres": ["comedy", "drama", "fantasy", "romance", "supernatural", "psychological", "school", "shoujo"]
+    },
+    "Angelic Layer": {
+        "description": "A sixth-grader enters to win a championship for the most popular game in the world, Angelic Layer, where players must train 'Angels' that compete in tournaments",
+        "genres": ["action", "comedy", "drama", "sci-fi", "strategy game", "shounen"]
+    },
+    "Arcana": {
+        "description": "A princess is locked away in a tower until she will be forced to marry an arrogant prince, but when her power, the Arcana of Time (ability to see the past), is awakened within her, she begins  to use her power to fight for peace, save those she loves, and change the future.",
+        "genres": ["drama", "fantasy", "romance", "shoujo"]
+    },
+    "Astral Project": {
+        "description": "A man inherits a jazz CD from his recently deceased sister, which when played, leads to out-of-body experiences, leading to him investigating the mysterious circumstances under which his sister died and the mystery behind the CD.",
+        "genres": ["drama", "mystery", "supernatural", "psychological", "seinen"]
+    },
+    "Azumanga Daioh": {
+        "description": "The everyday life and shenanigans of a group of six eccentric girls who are classmates.",
+        "genres": ["comedy", "slice of life", "cute girls doing cute things", "school", "shonen"]
+    },
+    "Bamboo Blade": {
+        "description": "To win a bet against an old friend, a young teacher & supervisor of the high school kendo club needs to find a winning, skilled five-woman team.",
+        "genres": ["comedy", "sports", "combat sports", "school", "seinen"]
+    },
+    "Basara": {
+        "description": "After a great catastrophe has devestated Japan, in the present day, an emperor and his four sons reign over the country. The twin sister of the Child of Destiny, the one prophesied to free Japan from the royal rule, must take on her sibling's name after their death. After meeting a mysterious young man, however, her fate will be bound to him by war, hatred, and love.",
+        "genres": ["adventure", "drama", "fantasy", "romance", "shoujo"]
+    },
+    "Beyond My Touch": {
+        "description": "At his classmate Takayama's funeral, a boy named Mizuno runs into the deceased himself, whose ghost is bound to this world until his unfinished business, to steal a kiss from the other's lips, is resolved",
+        "genres": ["boy's love", "drama", "shoujo"]
+    },
+    "Bleach": {
+        "description": "High schooler Ichigo Kurosaki is able to see the spirits of the dead. But after becoming a Soul Reaper himself, Ichigo must take up the duties of exterminate Hollows, evil soul-consuming spirits, and protect the souls of the living and dead",
+        "genres": ["action", "adventure", "supernatural", "shounen"]
+
+    }, 
+    "Blood: The Last Vampire (2002)": {
+        "description": "A follow-up manga to the 2000 movie 'Blood: The Last Vampire', centering around individuals who kill dangerous blood-sucking beasts call 'teropterids'",
+        "genres": ["horror", "vampire"]
+    }, 
+    "Cardcaptor Sakura (Masters of the Clow)": {
+        "description": "An elementary school student discovers she has magical powers after freeing a set of magical cards, which she now must capture before they release havoc all over. The Masters of Clow is the second of the two six-volume series.",
+        "genres": ["adventure", "comedy", "fantasy", "romance", "magical girl", "shoujo"]
+    }
+    
+}

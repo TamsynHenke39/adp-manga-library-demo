@@ -1,0 +1,170 @@
+.active-select {
+  background-color: #ffd4f8 !important; /* custom color */
+  color: black !important;              /* text color */
+  border-color: #a47ca1 !important;     /* optional */
+  padding: 10px !important;
+  font-family: 'plotholes reg'
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #ffeacd !important;
+}
+
+
+.alert {
+    background-color: #ffe4d6 !important; /* custom color */
+    border-color: #FF8882 !important;     /* optional */
+    border-radius: 10px !important;
+    border-width: 2px !important;
+    border-style: double !important;
+}
+
+.btn-outline-orange {
+  background-color: white !important;
+  border-color: #FF8882 !important;
+  border-width: 2px !important;
+}
+
+.btn-outline-orange:hover {
+  background-color: #FF8882 !important;
+  color: white !important;
+
+}
+
+.float-column {
+  height: 300px; /* includes heading + scrollable list */
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+    width: 100%; /* or any custom size */
+    height: 100%; 
+    object-fit: cover;
+}
+
+.image-container-series {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  overflow: hidden;
+}
+
+
+.image-container-banner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.navbar.bg-dark {
+  background-color: #1F1F22 !important;
+}
+
+span.no-active {
+  font-family: 'arial' !important;
+}
+
+.scrollable-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.scrollable-list-wrapper {
+  max-height: 260px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.text-block-series{
+  
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+
+  color: rgb(0, 0, 0);
+  background-color: white;
+  padding: 10px 30px;
+  word-wrap: break-word;
+  opacity: 90%;
+  display: inline-block;
+  max-width: 80%;
+}
+
+.text-block-banner{
+
+  position: absolute;
+  bottom: 15%;
+  left: 0%;
+
+  position: absolute;
+
+  color: rgb(255, 255, 255);
+  background-color: #1f1f22;
+  padding: 10px 30px;
+  word-wrap: break-word;
+  display: inline-block;
+  max-width: 80%;
+}
+
+.text-bg-mangaCount {
+  background-color: #ff9382;
+}
+
+/**fonts i imported*/
+
+@font-face {
+  font-family: 'mangaka';
+  src: url(../public/Mangaka.otf)
+}
+
+/**back issues*/
+@font-face {
+  font-family: 'anime3 bold ital';
+  src: url(../public/Anime3/AnimeAce3BB_BoldItalic.otf)
+}
+
+@font-face {
+  font-family: 'anime3 bold';
+  src: url(../public/Anime3/AnimeAce3BB_Bold.otf)
+}
+
+@font-face {
+  font-family: 'anime3 ital';
+  src: url(../public/Anime3/AnimeAce3BB_Italic.otf)
+}
+
+@font-face {
+  font-family: 'anime3 reg';
+  src: url(../public/Anime3/AnimeAce3BB_Regular.otf)
+}
+
+@font-face {
+  font-family: 'plotholes bold ital';
+  src: url(../public/PlotHoles/PlotHolesBB-BoldItalic.otf)
+}
+
+@font-face {
+  font-family: 'plotholes bold';
+  src: url(../public/PlotHoles/PlotHolesBB-Bold.otf)
+}
+
+@font-face {
+  font-family: 'plotholes ital';
+  src: url(../public/PlotHoles/PlotHolesBB-Italic.otf)
+}
+
+@font-face {
+  font-family: 'plotholes reg';
+  src: url(../public/PlotHoles/PlotHolesBB-Regular.otf)
+}
