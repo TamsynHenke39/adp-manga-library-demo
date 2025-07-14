@@ -57,7 +57,7 @@ function EntrySeriesPage({manga, volumes}: Props) {
   }
 
   return (
-    <div>
+    <div style = {{paddingBottom:'30px'}}>
       <div className = "image-container-series">
         <img
           src = {'/covers/' + manga.coverUrl}
@@ -75,6 +75,12 @@ function EntrySeriesPage({manga, volumes}: Props) {
           </ListGroup>
         </div>
         : <p>test test test</p>}
+        <div style = {{padding: '30px'}}>
+          <p>{manga.tags.length}</p>
+          <h5>Tags:</h5>
+          {manga.tags.map((tag)=>
+          <span className="badge text-bg-warning">{tag}</span>)}
+        </div>
     </div>
   );
 

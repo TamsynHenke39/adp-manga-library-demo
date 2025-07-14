@@ -18,7 +18,8 @@ function App() {
   const [seriesList, setSeriesList] = useState<Series[]>([]);
   const [standalonesList, setStandalonesList]= useState<Entry[]>([]);
 
-  
+  const [tagMap, setTagMap] = useState<Map<string, Array<Entry | Series>>>(new Map());
+
 
   /**switching between pages */
   const [page, setPage] = useState<Page>({kind: "Loading"})
@@ -26,7 +27,8 @@ function App() {
   /**alert button */
   const [alertVisible, setAlertVisibility] = useState<boolean>(false)
 
-  
+  const [isLoaded, setLoad] = useState<boolean>(false);
+
 
   /**fetches the manga*/
   useEffect(() =>{
@@ -85,10 +87,12 @@ function App() {
       title: string;
       coverUrl: string;
       quant?: number;
+      tags: [],
       volumes?: Array<{
         vol: number,
         id: string,
         quant: number,
+        tags: [],
       }>;
     }>;
 
@@ -105,6 +109,7 @@ function App() {
           title: entry.title,
           coverUrl: entry.coverUrl,
           quant: entry.quant,
+          tags: [],
         }
 
         validManga.push(standalone);
@@ -120,6 +125,7 @@ function App() {
             id: vol.id, 
             title: entry.title + " - " + (typeof vol.vol === 'number' ? ' Vol. ': "") +vol.vol,
             quant: vol.quant,
+            tags: [],
           }
 
           validManga.push(volume)
@@ -131,6 +137,7 @@ function App() {
           title: entry.title,
           coverUrl: entry.coverUrl,
           volumes: currVols,
+          tags: []
         })
       }
     }
@@ -139,6 +146,106 @@ function App() {
     setSeriesList(validSeries)
     setStandalonesList(validStandalones)
     setPage({kind: "Home"})
+    setLoad(true);
+  }
+
+  /**fetches the tags*/
+  useEffect(() => {
+
+    if (isLoaded) {
+      fetch('/description/descriptions.json')
+        .then(handleTagResponse)
+        .catch(() => handleTagError('failed to connect to server'))
+    }
+  }, [isLoaded])
+
+  /**response handler for fetching tags */
+  const handleTagResponse = (res: Response): void => {
+    if (res.status === 200) {
+      res.json().then(handleTagJson)
+        .catch(() => handleTagError("200 response is not valid JSON"));
+      } else if (res.status === 400){
+      res.text().then(handleTagError)
+          .catch(() => handleTagError("400 response is not text"));
+      } else {
+      handleTagError(`bad status code ${res.status}`)
+      }
+  }
+
+  /**error handling for the fetching the tags */
+  const handleTagError = (msg: string): void => {
+      console.error(`Error fetching /description/descriptions.json: ${msg}`)
+  }
+
+  /**handles the tag json response*/
+  const handleTagJson = (val: any): void => {
+
+      if (!isRecord(val)) {
+        handleTagError(`bad type for val: ${typeof val}`)
+        return;
+      }
+
+      const tagKeys = Object.keys(val);
+
+      if (!tagKeys.every((item) => typeof item === 'string' )) {
+        handleTagError(`bad type for value inside of keys`)
+      }
+
+      const tagMap: Map<string, Array<Entry | Series>> = new Map();
+
+
+      //loop through the titles in the json file
+      for (const title of tagKeys) {
+
+        //get the record containing the information for each title
+        const details = val[title];
+
+        if (!details || !isRecord(details)) {
+            handleTagError(`bad type for values associated at each key ${typeof details}`)
+            return;
+        } else if (!Array.isArray(details.genres)) {
+            handleTagError(`bad type for genres: ${typeof details.genres}`)
+            return;
+        } else if (!details.genres.every((item) => typeof item === 'string')) {
+            handleTagError(`type of values inside of genres is not a string`)
+            return;
+        }
+
+        //loop through the tags in genres
+        details.genres.forEach((tag) =>{
+
+          //get the information about the manga given the title we're looping on
+          const seriesManga = seriesList.find((manga) => title === manga.title);
+          const standaloneManga = standalonesList.find((manga) => title === manga.title);
+
+          let definedManga: Series | Entry | undefined;
+
+          if (seriesManga !== undefined) {
+              definedManga = seriesManga;
+          } else if (standaloneManga !== undefined) {
+              definedManga = standaloneManga
+          }
+
+          if (definedManga !== undefined) {
+            if (tagMap.has(tag)) {
+                const mangaArray = tagMap.get(tag)!;
+                mangaArray.push(definedManga);
+                tagMap.set(tag, mangaArray)
+            } else {
+            tagMap.set(tag, [definedManga])
+            }
+            //add the tag to the defined Manga
+            definedManga.tags.push(tag)
+
+            if (definedManga === seriesManga) {
+              for (const vol of definedManga.volumes) {
+                vol.tags.push(tag);
+              }
+            }
+          }
+        })
+      }
+      setTagMap(tagMap);
   }
   
   /**called when we select a manga volume to open a dedicated page*/
@@ -236,7 +343,7 @@ function App() {
 
       {page.kind === "Tag Page" && (
         <TaglistPage seriesList ={seriesList} standaloneList ={standalonesList} 
-          selectFunctions= {[handleSelectItem, handleSelectSeries]}>
+          selectFunctions= {[handleSelectItem, handleSelectSeries]} tagMap = {tagMap}>
         </TaglistPage>
       )}
 

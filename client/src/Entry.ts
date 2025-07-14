@@ -3,6 +3,7 @@ export type Entry = {
   title: string;
   coverUrl?: string;
   quant: number;
+  tags: string[];
 }
 
 export type Series = {
@@ -10,4 +11,5 @@ export type Series = {
   title: string;
   coverUrl: string;
   volumes: Entry[];
+  tags: string[];
 }

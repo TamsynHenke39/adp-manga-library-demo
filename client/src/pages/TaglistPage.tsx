@@ -8,6 +8,7 @@ interface Props {
     seriesList: Series[];
     standaloneList: Entry[];
     selectFunctions: [((manga: Entry) => void), ((manga: Series) => void)]
+    tagMap: Map<string, Array<Entry | Series>>;
 }
 
 type SortKind = "alpha_desc" | "alpha_asc" | "count_asc" | "count_desc"
@@ -16,104 +17,13 @@ type Sort = {kind: SortKind, label: string}
             | undefined
 
 
-function TaglistPage({seriesList, standaloneList, selectFunctions}: Props) {
+function TaglistPage({seriesList, standaloneList, selectFunctions, tagMap}: Props) {
 
     /**the information stored about the various genres/tags, maps each tag to the work */
-    const [tagMap, setTagMap] = useState<Map<string, Array<Entry | Series>>>(new Map());
-    const [tagList, setTagList] = useState<string[]>([]);
+    const [tagList, setTagList] = useState<string[]>(Array.from(tagMap.keys()).sort());
 
     const [filter, setFilter] = useState<string>("");
     const [sort, setSort] = useState<Sort>(undefined)
-
-
-    /**fetches the tags*/
-    useEffect(() => {
-
-        fetch('/description/descriptions.json')
-        .then(handleTagResponse)
-        .catch(() => handleTagError('failed to connect to server'))
-    }, [])
-
-    /**response handler for fetching tags */
-    const handleTagResponse = (res: Response): void => {
-        if (res.status === 200) {
-        res.json().then(handleTagJson)
-            .catch(() => handleTagError("200 response is not valid JSON"));
-        } else if (res.status === 400){
-        res.text().then(handleTagError)
-            .catch(() => handleTagError("400 response is not text"));
-        } else {
-        handleTagError(`bad status code ${res.status}`)
-        }
-    }
-
-    /**error handling for the fetching the tags */
-    const handleTagError = (msg: string): void => {
-        console.error(`Error fetching /description/descriptions.json: ${msg}`)
-    }
-
-    /**handles the tag json response*/
-    const handleTagJson = (val: any): void => {
-
-        if (!isRecord(val)) {
-        handleTagError(`bad type for val: ${typeof val}`)
-        return;
-        }
-
-        const tagKeys = Object.keys(val);
-
-        if (!tagKeys.every((item) => typeof item === 'string' )) {
-        handleTagError(`bad type for value inside of keys`)
-        }
-
-        const tagMap: Map<string, Array<Entry | Series>> = new Map();
-
-
-        //loop through titles
-        for (const title of tagKeys) {
-
-
-            const details = val[title];
-
-            if (!details || !isRecord(details)) {
-                handleTagError(`bad type for values associated at each key ${typeof details}`)
-                return;
-            } else if (!Array.isArray(details.genres)) {
-                handleTagError(`bad type for genres: ${typeof details.genres}`)
-                return;
-            } else if (!details.genres.every((item) => typeof item === 'string')) {
-                handleTagError(`type of values inside of genres is not a string`)
-                return;
-            }
-
-            details.genres.forEach((tag) =>{
-
-                const seriesManga = seriesList.find((manga) => title === manga.title);
-                const standaloneManga = standaloneList.find((manga) => title === manga.title);
-
-                let definedManga: Series | Entry | undefined;
-
-                if (seriesManga !== undefined) {
-                    definedManga = seriesManga;
-                } else if (standaloneManga !== undefined) {
-                    definedManga = standaloneManga
-                }
-
-                if (definedManga !== undefined) {
-                    if (tagMap.has(tag)) {
-                        const mangaArray = tagMap.get(tag)!;
-                        mangaArray.push(definedManga);
-                        tagMap.set(tag, mangaArray)
-                    //
-                    } else {
-                    tagMap.set(tag, [definedManga])
-                    }
-                }
-            })
-        }
-        setTagMap(tagMap);
-        setTagList(Array.from(tagMap.keys()).sort())
-    }
 
     /**filters manga by the name of the tag */
     const handleFilterChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
@@ -160,8 +70,19 @@ function TaglistPage({seriesList, standaloneList, selectFunctions}: Props) {
                 }
 
                 const sortedList = entries.map(([tagName, _]) => tagName)
+
+                /**make sure the ones added to the sortedlist are only the ones matching the filter */
+
+                const filteredList = [];
+
+                for (const tag of sortedList) {
+
+                    if (tagList.includes(tag)) {
+                        filteredList.push(tag);
+                    }
+                }
                 
-                setTagList(sortedList);
+                setTagList(filteredList);
             }
 
         }

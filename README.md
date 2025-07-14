@@ -6,6 +6,7 @@ This project is a sample manga library for the Anime Discover Project at UW.
 * [![React][React.js]][React-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 
+## Getting Started
 
 ### Prerequisites
 
@@ -22,3 +23,45 @@ This is an example of how to list things you need to use the software and how to
 [React-url]: https://reactjs.org/
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/TamsynHenke39/adp-manga-library-demo.git
+cd adp-manga-library-demo
+```
+
+### 2. Install the packages
+
+In the server folder:
+
+```bash
+cd server
+npm install --no-audit
+```
+
+In the client folder:
+
+```bash
+cd client
+npm install --no-audit
+npm i bootstrap@latest
+```
+
+### 3. Run the app locally
+
+In one terminal:
+```bash
+cd client
+npm run dev
+```
+
+In another terminal:
+```bash
+cd server
+npm run start
+```
+
+### 4. Acccess the app:
+Frontend: http://localhost:5173
+Backend: https://localhost:8000

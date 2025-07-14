@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { Page } from "../App";
 
 interface Props {
@@ -7,7 +6,7 @@ interface Props {
   page: Page;
 }
 
-function Navbar({onHomeClick, page, onTagPageClick}: Props) {
+function Navbar({onHomeClick, onTagPageClick, page}: Props) {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"> 
