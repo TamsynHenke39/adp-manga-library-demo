@@ -1,5 +1,5 @@
 import ListGroup from './components/ListGroup'
-import type { Entry, Series } from './Entry';
+import { addTagToMangaList, addTagToSeriesList, type Entry, type Series } from './Entry';
 import { useState, useEffect} from 'react'
 import { isRecord } from './record';
 import Alert from './components/Alert';
@@ -24,7 +24,7 @@ function App() {
   /**switching between pages */
   const [page, setPage] = useState<Page>({kind: "Loading"})
 
-  /**alert button */
+  /**alert button*/
   const [alertVisible, setAlertVisibility] = useState<boolean>(false)
 
   const [isLoaded, setLoad] = useState<boolean>(false);
@@ -191,6 +191,9 @@ function App() {
         handleTagError(`bad type for value inside of keys`)
       }
 
+      let updatedMangaList = [...mangaList]
+      let updatedSeriesList = [...seriesList]
+      let updatedStandaloneList = [...standalonesList]
       const tagMap: Map<string, Array<Entry | Series>> = new Map();
 
 
@@ -211,51 +214,82 @@ function App() {
             return;
         }
 
-        //loop through the tags in genres
-        details.genres.forEach((tag) =>{
+        const genres = details.genres;
 
-          //get the information about the manga given the title we're looping on
-          const seriesManga = seriesList.find((manga) => title === manga.title);
-          const standaloneManga = standalonesList.find((manga) => title === manga.title);
+        const isSeries = updatedSeriesList.some(manga => manga.title === title);
 
-          let definedManga: Series | Entry | undefined;
-
-          if (seriesManga !== undefined) {
-              definedManga = seriesManga;
-          } else if (standaloneManga !== undefined) {
-              definedManga = standaloneManga
+        if (isSeries) {
+          for (const tag of genres) {
+            updatedSeriesList = addTagToSeriesList(updatedSeriesList, title, tag)
           }
-
-          if (definedManga !== undefined) {
-            if (tagMap.has(tag)) {
-                const mangaArray = tagMap.get(tag)!;
-                mangaArray.push(definedManga);
-                tagMap.set(tag, mangaArray)
-            } else {
-            tagMap.set(tag, [definedManga])
-            }
-            //add the tag to the defined Manga
-            definedManga.tags.push(tag)
-
-            if (definedManga === seriesManga) {
-              for (const vol of definedManga.volumes) {
-                vol.tags.push(tag);
-              }
-            }
+        } else {
+          for (const tag of genres) {
+            updatedStandaloneList = addTagToMangaList(updatedStandaloneList, title, tag)
           }
-        })
+        }
       }
-      setTagMap(tagMap);
+
+      for (const title of tagKeys) {
+
+        const details = val[title]
+
+        if (!details || !isRecord(details) || !Array.isArray(details.genres)) {
+            handleTagError(`bad type for values associated at each key ${typeof details}`)
+            return;
+        }
+        
+        const genres = details.genres;
+        const updatedManga =
+          updatedSeriesList.find(series => series.title === title) ??
+          updatedStandaloneList.find(entry => entry.title === title);
+
+        
+        if (!updatedManga) continue;
+
+        //loop through the tags in genres
+        for (const tag of genres) {
+
+          if (tagMap.has(tag)) {
+            tagMap.get(tag)!.push(updatedManga);
+          } else {
+            tagMap.set(tag, [updatedManga])
+          }
+        }
+      }
+      const allVolumes = updatedSeriesList.flatMap(series => 
+        series.volumes.map(volume => ({
+          ...volume,
+          tags: [...new Set([...(volume.tags || []), ...series.tags])]
+        }))
+      );
+      const newMangaList = [...updatedStandaloneList, ...allVolumes];
+      setSeriesList(updatedSeriesList)
+      setStandalonesList(updatedStandaloneList)
+      setMangaList(newMangaList);
+      setTagMap(new Map(tagMap));
+
   }
   
   /**called when we select a manga volume to open a dedicated page*/
   const handleSelectItem = (manga: Entry): void => {
-    setPage({kind: "Standalone", standalone: manga})
+
+    const resolved = standalonesList.find( s => s.title === manga.title);
+    if (resolved) {
+      setPage({kind: "Standalone", standalone: resolved});
+    } else {
+      console.warn("Could not find matching standalone in seriesList for:", manga.title)
+    }
   }
 
   /** called when select a manga series to open a dedicated page*/
   const handleSelectSeries = (manga: Series): void => {
-    setPage({kind: "Series", series: manga});
+
+    const resolved = seriesList.find( s => s.title === manga.title);
+    if (resolved) {
+      setPage({kind: "Series", series: manga});
+    } else {
+      console.warn("Could not find matching series in seriesList for:", manga.title)
+    }
   }
 
   /**called when you click this button */
@@ -342,9 +376,7 @@ function App() {
       )}
 
       {page.kind === "Tag Page" && (
-        <TaglistPage seriesList ={seriesList} standaloneList ={standalonesList} 
-          selectFunctions= {[handleSelectItem, handleSelectSeries]} tagMap = {tagMap}>
-        </TaglistPage>
+        <TaglistPage selectFunctions= {[handleSelectItem, handleSelectSeries]} tagMap = {tagMap}></TaglistPage>
       )}
 
       {!["Home", "Series", "Standalone", "Tag Page"].includes(page.kind) && (

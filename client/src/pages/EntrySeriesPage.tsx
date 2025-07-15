@@ -8,11 +8,18 @@ interface Props {
   volumes?: Entry[];
   onSelectItem?: (manga: Entry) => void,
   onSelectSeries?: (manga: Series) => void,
+  tagMap?: Map<string, Array<Entry | Series>>;
 }
 
-function EntrySeriesPage({manga, volumes}: Props) {
+function EntrySeriesPage({manga, volumes, tagMap}: Props) {
 
   const [description, setDescription] = useState("Loading...");
+
+  useEffect(() => {
+    console.log("manga.title:", manga.title);
+    console.log("manga.tags:", manga.tags);
+    console.log("volume count:", volumes?.length);
+    }, [manga]);
   
   useEffect(() => {
 
@@ -76,16 +83,14 @@ function EntrySeriesPage({manga, volumes}: Props) {
         </div>
         : <p>test test test</p>}
         <div style = {{padding: '30px'}}>
-          <p>{manga.tags.length}</p>
-          <h5>Tags:</h5>
-          {manga.tags.map((tag)=>
-          <span className="badge text-bg-warning">{tag}</span>)}
+          <span style = {{display: 'flex'}}>
+            <h5 style = {{marginRight: '5px'}}>Tags:</h5>
+            {manga.tags.map((tag)=>
+            <span key = {tag} style ={{marginTop: '2px', padding: '5px', height: '60%', marginLeft: '5px'}} className="badge text-bg-mangaCount">{tag}</span>)}
+          </span>
         </div>
     </div>
   );
-
-
-  
 }
 
 export default EntrySeriesPage

@@ -6,7 +6,7 @@ interface Props {
     list: string[];
 
     //optional data strcuture
-    tagMap?: Map<string, any>
+    tagMap?: Map<string, Array<Series | Entry>>
     children?: ReactNode;
 
     //optional series select function

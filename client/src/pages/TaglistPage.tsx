@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import type { Entry, Series } from "../Entry";
-import { isRecord } from "../record";
 import Accordion from "../components/Accordion";
 import Alert from "../components/Alert";
 
 interface Props {
-    seriesList: Series[];
-    standaloneList: Entry[];
     selectFunctions: [((manga: Entry) => void), ((manga: Series) => void)]
     tagMap: Map<string, Array<Entry | Series>>;
 }
@@ -17,7 +14,8 @@ type Sort = {kind: SortKind, label: string}
             | undefined
 
 
-function TaglistPage({seriesList, standaloneList, selectFunctions, tagMap}: Props) {
+function TaglistPage({selectFunctions, tagMap}: Props) {
+
 
     /**the information stored about the various genres/tags, maps each tag to the work */
     const [tagList, setTagList] = useState<string[]>(Array.from(tagMap.keys()).sort());
