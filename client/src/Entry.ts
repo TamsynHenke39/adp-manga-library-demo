@@ -46,3 +46,16 @@ export const addTagToSeriesList = (mangaList: Series[], title: string, tag: stri
   return updatedList;
 
 }
+
+export const sortByTitle = (a: Series | Entry, b: Series | Entry): number => {
+    if (a.title > b.title) {
+      return 1;
+    }
+
+    if (a.title < b.title) {
+      return -1;
+    }
+
+    return 0;
+
+  }

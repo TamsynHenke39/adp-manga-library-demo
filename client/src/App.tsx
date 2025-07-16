@@ -1,5 +1,5 @@
 import ListGroup from './components/ListGroup'
-import { addTagToMangaList, addTagToSeriesList, type Entry, type Series } from './Entry';
+import { addTagToMangaList, addTagToSeriesList, sortByTitle, type Entry, type Series } from './Entry';
 import { useState, useEffect} from 'react'
 import { isRecord } from './record';
 import Alert from './components/Alert';
@@ -8,8 +8,15 @@ import './App.css'
 import EntrySeriesPage from './pages/EntrySeriesPage';
 import TaglistPage from './pages/TaglistPage';
 import Navbar from './components/Navbar';
+import Catalogue from './pages/Catalogue';
 
-export type Page = {kind: "Loading"} | {kind: "Home"} | {kind: "Series", series: Series} | {kind: "Standalone", standalone: Entry} | {kind: "Tag Page"}
+export type Page = 
+{kind: "Loading"} 
+| {kind: "Home"} 
+| {kind: "Series", series: Series} 
+| {kind: "Standalone", standalone: Entry} 
+| {kind: "Tag Page"}
+| {kind: "Catalogue", list: Entry[] | Series[], heading: string}
 
 function App() {
 
@@ -191,7 +198,6 @@ function App() {
         handleTagError(`bad type for value inside of keys`)
       }
 
-      let updatedMangaList = [...mangaList]
       let updatedSeriesList = [...seriesList]
       let updatedStandaloneList = [...standalonesList]
       const tagMap: Map<string, Array<Entry | Series>> = new Map();
@@ -215,7 +221,6 @@ function App() {
         }
 
         const genres = details.genres;
-
         const isSeries = updatedSeriesList.some(manga => manga.title === title);
 
         if (isSeries) {
@@ -256,13 +261,19 @@ function App() {
           }
         }
       }
+
+      updatedSeriesList.sort(sortByTitle);
+      updatedStandaloneList.sort(sortByTitle);
+
       const allVolumes = updatedSeriesList.flatMap(series => 
         series.volumes.map(volume => ({
-          ...volume,
-          tags: [...new Set([...(volume.tags || []), ...series.tags])]
+          ...volume, tags: [...series.tags]
         }))
       );
       const newMangaList = [...updatedStandaloneList, ...allVolumes];
+
+      newMangaList.sort(sortByTitle)
+      
       setSeriesList(updatedSeriesList)
       setStandalonesList(updatedStandaloneList)
       setMangaList(newMangaList);
@@ -292,9 +303,18 @@ function App() {
     }
   }
 
-  /**called when you click this button */
-  const handleTagPageClick = (): void => {
-    setPage({kind: "Tag Page"})
+  /**called when you click this button to go to a catalogue of items */
+  const handleCataloguePageClick = (heading: string): void => {
+
+    if (heading === "Complete Manga Catalogue") {
+      setPage({kind: "Catalogue", list: mangaList, heading: heading})
+
+    } else if (heading === "All Series") {
+      setPage({kind: "Catalogue", list: seriesList, heading: heading})
+      
+    } else if (heading === "All One-Shots") {
+      setPage({kind: "Catalogue", list: standalonesList, heading: heading})
+    }
   }
 
     return (
@@ -302,7 +322,10 @@ function App() {
         <Navbar 
           page = {page}
           onHomeClick = {() => setPage({kind: "Home"})}
-          onTagPageClick = {() => setPage({kind: "Tag Page"})}>
+          onTagPageClick = {() => setPage({kind: "Tag Page"})}
+          onCataloguePageClick = {handleCataloguePageClick}
+          
+          >
           </Navbar>
 
       {page.kind === "Home" && (
@@ -362,7 +385,7 @@ function App() {
         </div>
 
         <div style={{ paddingLeft: '30px', paddingRight: '30px', paddingBottom: '30px' }}>
-          <Button onClick={handleTagPageClick}>Want to find something more specific? Click here see all titles by genre/demographic!</Button>
+          <Button onClick={() => setPage({kind: "Tag Page"})}>Want to find something more specific? Click here see all titles by genre/demographic!</Button>
         </div>
       </>
       )}
@@ -379,7 +402,11 @@ function App() {
         <TaglistPage selectFunctions= {[handleSelectItem, handleSelectSeries]} tagMap = {tagMap}></TaglistPage>
       )}
 
-      {!["Home", "Series", "Standalone", "Tag Page"].includes(page.kind) && (
+      {page.kind === "Catalogue" && (
+        <Catalogue list = {page.list} selectFunctions = {[handleSelectItem, handleSelectSeries]}>{page.heading}</Catalogue>
+      )}
+
+      {!["Home", "Series", "Standalone", "Tag Page", "Catalogue"].includes(page.kind) && (
         <div className="d-flex align-items-center">
           <strong role="status">Loading...</strong>
           <div className="spinner-border ms-auto" aria-hidden="true"></div>

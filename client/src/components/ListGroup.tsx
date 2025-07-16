@@ -4,13 +4,14 @@ import type { Entry, Series } from "../Entry";
 interface ListGroupProps {
     availabilityVisible?: boolean;
     children?: ReactNode,
-    heading?: string;
+    fullPage?: boolean,
+    heading?: string,
     mangas: Array<Entry | Series>,
     onSelectItem?: (manga: Entry) => void,
     onSelectSeries?: (manga: Series) => void,
 }
 
-function ListGroup({children, mangas, heading, onSelectItem , onSelectSeries, availabilityVisible = true} : ListGroupProps) {
+function ListGroup({children, mangas, heading, onSelectItem , onSelectSeries, availabilityVisible = true, fullPage = false} : ListGroupProps) {
 
     //Hook
     const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -27,7 +28,7 @@ function ListGroup({children, mangas, heading, onSelectItem , onSelectSeries, av
             {heading !== 'undefined' && <h3 style ={{fontFamily: 'mangaka'}}>{heading}</h3>}
             {children !== 'undefined' && <p >{children}</p>}
             {mangas.length === 0 && <p>No item found</p> }
-            <div className = "scrollable-list-wrapper" style = {{overflowY: 'auto', flexGrow: 1}}>
+            <div className = {fullPage ? "" : "scrollable-list-wrapper"} style = {{overflowY: 'auto', flexGrow: 1}}>
                 <ol className="list-group list-group-flush">
             {mangas.map((manga, index)=>
                 <li key = {manga.id}> 

@@ -3,10 +3,20 @@ import type { Page } from "../App";
 interface Props {
   onHomeClick: () => void;
   onTagPageClick: () => void;
+  onCataloguePageClick: (heading: string) => void;
   page: Page;
 }
 
-function Navbar({onHomeClick, onTagPageClick, page}: Props) {
+function Navbar({onHomeClick, onTagPageClick, onCataloguePageClick, page}: Props) {
+
+  const handleCataloguePageClick = (evt: React.MouseEvent<HTMLAnchorElement>): void => {
+
+    const heading = evt.currentTarget.dataset.heading
+
+    if (heading) {
+        onCataloguePageClick(heading);
+    }
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"> 
@@ -26,10 +36,10 @@ function Navbar({onHomeClick, onTagPageClick, page}: Props) {
                 Browse the Library
               </a>
               <ul className = "dropdown-menu">
-                <li><a className="dropdown-item" href="#">Complete Manga Catalogue</a></li>
-                <li><a className="dropdown-item" href="#All_Series">All Series</a></li>
-                <li><a className="dropdown-item" href="#All_One_Shots">All One-Shots</a></li>
-                <li><a className="dropdown-item" href="#" onClick = {onTagPageClick}>Mangas by Genre</a></li>
+                <li><a className="dropdown-item" href="#All_Manga" data-heading = "Complete Manga Catalogue" onClick = {handleCataloguePageClick}>Complete Manga Catalogue</a></li>
+                <li><a className="dropdown-item" href="#All_Series" data-heading = "All Series" onClick = {handleCataloguePageClick}>All Series</a></li>
+                <li><a className="dropdown-item" href="#All_One_Shots" data-heading = "All One-Shots" onClick = {handleCataloguePageClick}>All One-Shots</a></li>
+                <li><a className="dropdown-item" href="#All_Genres" data-heading = "Mangas by Genre" onClick = {onTagPageClick}>Mangas by Genre</a></li>
               </ul>
             </li>
             <li className="nav-item dropdown">

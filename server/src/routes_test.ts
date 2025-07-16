@@ -14,7 +14,6 @@ describe('routes', function() {
 
     it ('getManga', function() {
 
-
         const req1 = httpMocks.createRequest({
             method: "GET", url: "/api/manga"
         })
