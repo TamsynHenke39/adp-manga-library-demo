@@ -5,8 +5,6 @@ import { isRecord } from "../record";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-
-
 interface Props {
   manga: Entry | Series;
   volumes?: Entry[];
@@ -65,7 +63,7 @@ function EntrySeriesPage({manga, volumes}: Props) {
     <div style = {{paddingBottom:'30px'}}>
       <div className = "image-container-series">
         <img
-          src = {'/covers/' + manga.coverUrl}
+          src = {apiUrl + '/covers/' + manga.coverUrl}
           alt = {manga.title}>
         </img>
         <div className = "text-block-series">
