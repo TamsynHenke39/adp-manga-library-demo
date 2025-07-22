@@ -12,7 +12,7 @@ import Catalogue from './pages/Catalogue';
 
 const apiUrl = import.meta.env.REACT_APP_API_URL;
 
-console.log("API URL:", import.meta.env.REACT_APP_API_URL);
+console.log("Vite API URL:", import.meta.env.REACT_APP_API_URL);
 
 
 export type Page = 
