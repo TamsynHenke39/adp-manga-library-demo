@@ -162,7 +162,7 @@ function App() {
   useEffect(() => {
 
     if (isLoaded) {
-      fetch('/description/descriptions.json')
+      fetch(`${apiUrl}/description/descriptions.json`)
         .then(handleTagResponse)
         .catch(() => handleTagError('failed to connect to server'))
     }
