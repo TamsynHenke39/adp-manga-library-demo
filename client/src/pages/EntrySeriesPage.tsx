@@ -3,6 +3,9 @@ import type { Entry, Series } from "../Entry";
 import ListGroup from "../components/ListGroup";
 import { isRecord } from "../record";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
+
 interface Props {
   manga: Entry | Series;
   volumes?: Entry[];
@@ -14,15 +17,10 @@ function EntrySeriesPage({manga, volumes}: Props) {
 
   const [description, setDescription] = useState("Loading...");
 
-  useEffect(() => {
-    console.log("manga.title:", manga.title);
-    console.log("manga.tags:", manga.tags);
-    console.log("volume count:", volumes?.length);
-    }, [manga]);
   
   useEffect(() => {
 
-    fetch('description/descriptions.json')
+    fetch(`${apiUrl}/description/descriptions.json`)
       .then(handleDescriptionResponse)
       .catch(() => handleDescriptionError("failed to connect to server"))
   }, [manga.title])

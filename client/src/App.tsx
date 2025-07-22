@@ -10,6 +10,8 @@ import TaglistPage from './pages/TaglistPage';
 import Navbar from './components/Navbar';
 import Catalogue from './pages/Catalogue';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 export type Page = 
 {kind: "Loading"} 
 | {kind: "Home"} 
@@ -40,7 +42,7 @@ function App() {
   /**fetches the manga*/
   useEffect(() =>{
 
-    fetch('/api/manga')
+    fetch(`${apiUrl}/api/manga`)
       .then(handleMangaResponse)
       .catch(() => handleMangaError('failed to connect to server'))
 
@@ -349,7 +351,7 @@ function App() {
               <p>
                 The <a className = "link-danger" href="https://adp.moe/">
                   <strong>Anime Discovery Project</strong>
-                </a> (ADP) at the University of Washington in Seattle is a club that welcomes all anime lovers for more than 30 years. In our time as 
+                </a> (ADP) at the University of Washington in Seattle is a student-run organizaiton that welcomes all anime lovers for more than 30 years. In our time as 
                 an organization, we've acquired a substantial collection manga that we're excited to make <strong>free </strong> and publicly 
                 available to all ADP members. From retro 90s/2000s shoujo & shounen to classics like Bleach & One Piece, we hope you find 
                 something to enjoy reading!</p>
