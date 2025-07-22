@@ -12,9 +12,6 @@ import Catalogue from './pages/Catalogue';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-console.log("Vite API URL:", import.meta.env.VITE_APP_API_URL);
-
-
 export type Page = 
 {kind: "Loading"} 
 | {kind: "Home"} 
