@@ -12,6 +12,9 @@ import Catalogue from './pages/Catalogue';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+console.log("API URL:", process.env.REACT_APP_API_URL);
+
+
 export type Page = 
 {kind: "Loading"} 
 | {kind: "Home"} 
