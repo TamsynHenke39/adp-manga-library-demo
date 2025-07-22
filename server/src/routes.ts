@@ -50,14 +50,11 @@ export const getImagePath = (title: string): string => {
 
     //replaces the title
     for (const character of FORBIDDEN_FILE_NAME_CHARACTERS) {
-
         if (titleFormatted.includes(character)) {
             titleFormatted = titleFormatted.replaceAll(character, "");
         }
     }
-
     return titleFormatted + ".jpg";
-    
 }
 
 /**A list of characters that can be in titles, not file paths */

@@ -8,10 +8,9 @@ interface Props {
   volumes?: Entry[];
   onSelectItem?: (manga: Entry) => void,
   onSelectSeries?: (manga: Series) => void,
-  tagMap?: Map<string, Array<Entry | Series>>;
 }
 
-function EntrySeriesPage({manga, volumes, tagMap}: Props) {
+function EntrySeriesPage({manga, volumes}: Props) {
 
   const [description, setDescription] = useState("Loading...");
 
