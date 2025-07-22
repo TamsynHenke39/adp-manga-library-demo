@@ -22,7 +22,7 @@ function Navbar({onHomeClick, onTagPageClick, onCataloguePageClick, page}: Props
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"> 
       <div className="container-fluid">
         <a className="navbar-brand" href="#Home" onClick = {onHomeClick}>
-          <img src="../public/favicon.svg" alt="Logo" style = {{width: '30px', height: '24px', marginRight: '10px', marginTop: '2px'}} className="d-inline-block align-text-top"></img>
+          <img src="/favicon.svg" alt="Logo" style = {{width: '30px', height: '24px', marginRight: '10px', marginTop: '2px'}} className="d-inline-block align-text-top"></img>
           {page.kind === "Home" ? "Home" : "Manga Library"}
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

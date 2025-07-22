@@ -335,7 +335,7 @@ function App() {
         <div className="image-container-banner">
           <img
             style={{ height: '200px' }}
-            src={'../public/adpbanner.png'}
+            src={'/adpbanner.png'}
             alt='ADP Banner'
           />
         <div className='text-block-banner'>
