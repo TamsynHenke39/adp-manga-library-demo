@@ -10,9 +10,9 @@ import TaglistPage from './pages/TaglistPage';
 import Navbar from './components/Navbar';
 import Catalogue from './pages/Catalogue';
 
-const apiUrl = import.meta.env.REACT_APP_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
-console.log("Vite API URL:", import.meta.env.REACT_APP_API_URL);
+console.log("Vite API URL:", import.meta.env.VITE_APP_API_URL);
 
 
 export type Page = 
