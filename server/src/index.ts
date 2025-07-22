@@ -3,11 +3,16 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import { getManga } from "./routes";
 
+const cors = require('cors')
 
 // Configure and start the HTTP server.
-const port: number = 8088;
+const port: number = parseInt(process.env.PORT || "8088", 10);
 const app: Express = express();
 app.use(bodyParser.json());
+
+app.use(cors({
+    origin: 'https://adp-manga-library-demo.vercel.app'
+}))
 
 const staticImagePath = path.resolve(__dirname, '../manga_library/imgs');
 const staticDescriptionPath = path.resolve(__dirname, '../manga_library');
