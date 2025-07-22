@@ -11,7 +11,8 @@ const app: Express = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: 'https://adp-manga-library-demo.vercel.app'
+    origin: ['https://adp-manga-library-demo.vercel.app', 'http://localhost:5173'],
+    credentials: true,
 }))
 
 const staticImagePath = path.resolve(__dirname, '../manga_library/imgs');
