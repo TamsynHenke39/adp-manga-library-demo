@@ -339,8 +339,8 @@ function App() {
             alt='ADP Banner'
           />
         <div className='text-block-banner'>
-          <h1 style={{ fontFamily: 'mangaka', fontSize: '6vw' }}>
-            ADP Manga Library
+          <h1 style={{ fontFamily: 'mangaka', fontSize: '4vw' }}>
+            ADP Manga Library - Demo Site (In Progress)
           </h1>
         </div>
       </div>
